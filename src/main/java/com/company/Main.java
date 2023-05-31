@@ -28,12 +28,6 @@ public class Main {
         ProcessBuilder pb = new ProcessBuilder(nodePath.readLine(), nodejsFilePath, " ", obj.toString());
         pb.redirectOutput(ProcessBuilder.Redirect.INHERIT);
         pb.redirectError(ProcessBuilder.Redirect.INHERIT);
-        Process p = pb.start();
-        BufferedReader errorReader = new BufferedReader(new InputStreamReader(p.getErrorStream()));
-        String errorLine;
-        while ((errorLine = errorReader.readLine()) != null) {
-            System.err.println(errorLine);
-        }
-        System.out.println(p);
+        pb.start();
     }
 }

@@ -1,6 +1,11 @@
 package com.company;
 
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Iterator;
+
 import org.json.*;
 
 public class Main {
@@ -13,11 +18,30 @@ public class Main {
         obj.put("ftpPort", "21");
         obj.put("ftpUser", "kien.letrung");
         obj.put("ftpPassword", "Bac@!123..");
-        String newArgs = obj.toString().replace("\"", "\\^\"");
-        ProcessBuilder pb = new ProcessBuilder("/opt/nodejs/node-v16.16.0-linux-x64/bin/node ../../nodejs-ftp-file/index.js --data ^\"" + newArgs + "\"");
+        Iterator<String> keys = obj.keys();
+        StringBuilder params = new StringBuilder();
+
+        while(keys.hasNext()) {
+            String key = keys.next();
+            StringBuilder subParam = new StringBuilder();
+            subParam.append("--");
+            subParam.append(key);
+            subParam.append("=");
+            subParam.append(obj.get(key));
+            params.append(subParam);
+            params.append(" ");
+        }
+        String workingDirectory = "../nodejs-ftp-file";
+        ProcessBuilder pb = new ProcessBuilder("/home/ubuntu/.nvm/versions/node/v18.15.0/bin/node", "../nodejs-ftp-file/index.js", " ", params.toString());
+        pb.directory(new File(workingDirectory));
         pb.redirectOutput(ProcessBuilder.Redirect.INHERIT);
         pb.redirectError(ProcessBuilder.Redirect.INHERIT);
         Process p = pb.start();
+        BufferedReader errorReader = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+        String errorLine;
+        while ((errorLine = errorReader.readLine()) != null) {
+            System.err.println(errorLine);
+        }
         System.out.println(p);
     }
 }

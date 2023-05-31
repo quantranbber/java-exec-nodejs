@@ -18,27 +18,14 @@ public class Main {
         obj.put("ftpPort", "21");
         obj.put("ftpUser", "kien.letrung");
         obj.put("ftpPassword", "Bac@!123..");
-        Iterator<String> keys = obj.keys();
-        StringBuilder params = new StringBuilder();
 
-        while(keys.hasNext()) {
-            String key = keys.next();
-            String subParam = "--" +
-                    key +
-                    "=" +
-                    obj.get(key);
-            params.append(subParam);
-            params.append(" ");
-        }
-        String workingDirectory = "../nodejs-ftp-file";
         Runtime rt = Runtime.getRuntime();
         Process nodeProc = rt.exec(new String[] {"which", "node"});
 
-        BufferedReader stdInput = new BufferedReader(new
+        BufferedReader nodePath = new BufferedReader(new
                 InputStreamReader(nodeProc.getInputStream()));
-        System.out.println("================" + stdInput.readLine());
-        ProcessBuilder pb = new ProcessBuilder("/opt/nodejs/node-v16.16.0-linux-x64/bin/node", "../nodejs-ftp-file/index.js", " ", obj.toString());
-        pb.directory(new File(workingDirectory));
+        String nodejsFilePath = "../nodejs-ftp-file/index.js";
+        ProcessBuilder pb = new ProcessBuilder(nodePath.readLine(), nodejsFilePath, " ", obj.toString());
         pb.redirectOutput(ProcessBuilder.Redirect.INHERIT);
         pb.redirectError(ProcessBuilder.Redirect.INHERIT);
         Process p = pb.start();

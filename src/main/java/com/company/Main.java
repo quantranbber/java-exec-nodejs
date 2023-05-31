@@ -32,7 +32,7 @@ public class Main {
             params.append(" ");
         }
         String workingDirectory = "../nodejs-ftp-file";
-        ProcessBuilder pb = new ProcessBuilder("/home/ubuntu/.nvm/versions/node/v18.15.0/bin/node", "../nodejs-ftp-file/index.js", " ", params.toString());
+        ProcessBuilder pb = new ProcessBuilder("/opt/nodejs/node-v16.16.0-linux-x64/bin/node", "../nodejs-ftp-file/index.js", " ", params.toString());
         pb.directory(new File(workingDirectory));
         pb.redirectOutput(ProcessBuilder.Redirect.INHERIT);
         pb.redirectError(ProcessBuilder.Redirect.INHERIT);

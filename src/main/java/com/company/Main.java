@@ -23,16 +23,21 @@ public class Main {
 
         while(keys.hasNext()) {
             String key = keys.next();
-            StringBuilder subParam = new StringBuilder();
-            subParam.append("--");
-            subParam.append(key);
-            subParam.append("=");
-            subParam.append(obj.get(key));
+            String subParam = "--" +
+                    key +
+                    "=" +
+                    obj.get(key);
             params.append(subParam);
             params.append(" ");
         }
         String workingDirectory = "../nodejs-ftp-file";
-        ProcessBuilder pb = new ProcessBuilder("/opt/nodejs/node-v16.16.0-linux-x64/bin/node", "../nodejs-ftp-file/index.js", " ", params.toString());
+        Runtime rt = Runtime.getRuntime();
+        Process nodeProc = rt.exec(new String[] {"which", "node"});
+
+        BufferedReader stdInput = new BufferedReader(new
+                InputStreamReader(nodeProc.getInputStream()));
+        System.out.println("================" + stdInput.readLine());
+        ProcessBuilder pb = new ProcessBuilder("/opt/nodejs/node-v16.16.0-linux-x64/bin/node", "../nodejs-ftp-file/index.js", " ", obj.toString());
         pb.directory(new File(workingDirectory));
         pb.redirectOutput(ProcessBuilder.Redirect.INHERIT);
         pb.redirectError(ProcessBuilder.Redirect.INHERIT);

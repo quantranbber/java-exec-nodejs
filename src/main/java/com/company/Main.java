@@ -14,7 +14,7 @@ public class Main {
         obj.put("ftpUser", "kien.letrung");
         obj.put("ftpPassword", "Bac@!123..");
         String newArgs = obj.toString().replace("\"", "\\^\"");
-        ProcessBuilder pb = new ProcessBuilder("/opt/nodejs/node-v16.16.0-linux-x64/bin/node ../nodejs-ftp-file/index.js --data ^\"" + newArgs + "\"");
+        ProcessBuilder pb = new ProcessBuilder("/opt/nodejs/node-v16.16.0-linux-x64/bin/node ../../nodejs-ftp-file/index.js --data ^\"" + newArgs + "\"");
         pb.redirectOutput(ProcessBuilder.Redirect.INHERIT);
         pb.redirectError(ProcessBuilder.Redirect.INHERIT);
         Process p = pb.start();
